@@ -13,7 +13,7 @@ public class TodoService {
 
     private TodoRepository todoRepository;
 
-    private TodoService(TodoRepository todoRepository) {
+    public TodoService(TodoRepository todoRepository) {
         this.todoRepository = todoRepository;
     }
 
@@ -36,7 +36,6 @@ public class TodoService {
 
     public List<Todo> delete(Long id) {
         todoRepository.deleteById(id);
-        ;
         return list();
     }
 }
