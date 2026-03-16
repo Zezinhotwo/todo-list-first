@@ -2,44 +2,40 @@ package treino_todolist.controller;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
 import treino_todolist.entity.Todo;
 import treino_todolist.service.TodoService;
 
 @RestController
-@RequestMapping("/todos")
+@RequestMapping(value = "/todos")
 public class TodoController {
-    private TodoService todoService;
+
+    private final TodoService todoService;
 
     public TodoController(TodoService todoService) {
         this.todoService = todoService;
     }
 
     @PostMapping
-    List<Todo> create(@RequestBody Todo todo) {
-        return todoService.create(todo);
+    public ResponseEntity<List<Todo>> create(@RequestBody @Valid Todo todo) {
+        return ResponseEntity.ok(todoService.create(todo));
     }
 
     @GetMapping
-    List<Todo> list() {
-        return todoService.list();
+    public ResponseEntity<List<Todo>> list() {
+        return ResponseEntity.ok(todoService.list());
     }
 
     @PutMapping
-    List<Todo> update(@RequestBody Todo todo) {
-        return todoService.update(todo);
+    public ResponseEntity<List<Todo>> update(@RequestBody Todo todo) {
+        return ResponseEntity.ok(todoService.update(todo));
     }
 
-    @DeleteMapping("{id}")
-    List<Todo> delete(@PathVariable("id") Long id) {
-        return todoService.delete(id);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<List<Todo>> delete(@PathVariable Long id) {
+        return ResponseEntity.ok(todoService.delete(id));
     }
 }
